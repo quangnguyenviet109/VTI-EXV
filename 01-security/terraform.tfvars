@@ -1,27 +1,27 @@
 target_groups = {
   registration-blue = {
-    name        = "edion-net-app-registration-dev-tg-blue"
+    name        = "edion-net-app-re-dev-tg-blue"
     port        = 443
     protocol    = "HTTPS"
     vpc_id      = "vpc-5f684d38"
     target_type = "ip"
   },
   registration-green = {
-    name        = "edion-net-app-registration-dev-tg-green"
+    name        = "edion-net-app-re-dev-tg-green"
     port        = 443
     protocol    = "HTTPS"
     vpc_id      = "vpc-5f684d38"
     target_type = "ip"
   },
   manage-blue = {
-    name        = "edion-net-app-manage-dev-tg-blue"
+    name        = "edion-net-app-ma-dev-tg-blue"
     port        = 80
     protocol    = "HTTP"
     vpc_id      = "vpc-5f684d38"
     target_type = "ip"
   },
   manage-green = {
-    name        = "edion-net-app-manage-dev-tg-green"
+    name        = "edion-net-app-ma-dev-tg-green"
     port        = 80
     protocol    = "HTTP"
     vpc_id      = "vpc-5f684d38"
@@ -33,24 +33,14 @@ listener = {
   elb_arn         = "arn:aws:elasticloadbalancing:ap-northeast-1:555516925462:loadbalancer/app/testedion/d73802ce28753a3e"
   protocol        = "HTTP"
   port            = 81
-  default_action  = {
-    type          = "fixed-response"
-    fixed_response = {
-      status_code  = 200
-      content_type = "text/plain"
-      message_body = "OK"
-    }
+  default_action = {
+    type                  = "forward"
+    default_target_groups = ["registration-blue", "manage-blue"]
   }
 }
 
 listener_rules = {
-  registration-blue = {
-    priority        = 10
-    target_group_key = "registration-blue"  # References the key in target_groups map
-    condition = {
-      host_header = ["registration.domain"]
-    }
-  },
+  
   registration-green = {
     priority        = 30
     target_group_key = "registration-green"  # References the key in target_groups map
@@ -58,13 +48,7 @@ listener_rules = {
       host_header = ["registration.domain"]
     }
   },
-  manage-blue = {
-    priority        = 20
-    target_group_key = "manage-blue"  # References the key in target_groups map
-    condition = {
-      host_header = ["manage.domain"]
-    }
-  },
+  
   manage-green = {
     priority        = 40
     target_group_key = "manage-green"  # References the key in target_groups map
@@ -106,4 +90,3 @@ egress_rules = {
   protocol    = "all"
   cidr_blocks = ["0.0.0.0/0"]
 }
-

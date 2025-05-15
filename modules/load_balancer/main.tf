@@ -13,19 +13,19 @@ resource "aws_lb_target_group" "target_groups" {
 
 # Create HTTPS listener
 resource "aws_lb_listener" "https_listener" {
+  depends_on = [aws_lb_target_group.target_groups]
   load_balancer_arn = var.listener.elb_arn
   protocol          = var.listener.protocol
   port              = var.listener.port
   default_action {
     type = var.listener.default_action.type
     
-    dynamic "fixed_response" {
-      for_each = var.listener.default_action.type == "fixed-response" ? [var.listener.default_action.fixed_response] : []
-      
-      content {
-        status_code  = fixed_response.value.status_code
-        content_type = fixed_response.value.content_type
-        message_body = fixed_response.value.message_body
+    forward {
+      dynamic "target_group" {
+        for_each = var.listener.default_action.default_target_groups
+        content {
+          arn    = aws_lb_target_group.target_groups[target_group.value].arn
+        }
       }
     }
   }

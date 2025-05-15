@@ -12,19 +12,16 @@ variable "target_groups" {
 variable "listener" {
   description = "HTTPS listener configuration"
   type = object({
-    elb_arn         = string
-    protocol        = string
-    port            = number
-    default_action  = object({
-      type          = string
-      fixed_response = object({
-        status_code  = number
-        content_type = string
-        message_body = string
-      })
+    elb_arn        = string
+    protocol       = string
+    port           = number
+    default_action = object({
+      type                    = string
+      default_target_groups   = list(string)  # danh sách key của target groups
     })
   })
 }
+
 
 variable "listener_rules" {
   description = "Map of listener rule configurations"

@@ -29,18 +29,18 @@ deployments = {
     cluster_name       = "edion-net-dev-app-cluster01"
     service_name       = "edion-net-app-registration-dev-service"
     deployment_group   = "edion-net-dev-app-deploy_group01"
-    listener_arn = ["arn:aws:elasticloadbalancing:ap-northeast-1:555516925462:listener/app/testedion/d73802ce28753a3e/c7c85dbae3b0e879"]
-    target_group_1 = "edion-net-app-manage-dev-tg"
-    target_group_2 = "edion-net-app-registration-dev-tg"
+    listener_arn = ["arn:aws:elasticloadbalancing:ap-northeast-1:555516925462:listener/app/testedion/d73802ce28753a3e/dca837fd89b33855"]
+    target_group_1 = "edion-net-app-re-dev-tg-blue"
+    target_group_2 = "edion-net-app-re-dev-tg-green"
   },
   manage = {
     app_name           = "edion-net-dev-app-mgt01"
     cluster_name       = "edion-net-dev-app-mgt-cluster01"
     service_name       = "edion-net-app-manage-dev-service"
     deployment_group   = "edion-net-dev-app-mgt-deploy_group01"
-    listener_arn = ["arn:aws:elasticloadbalancing:ap-northeast-1:555516925462:listener/app/testedion/d73802ce28753a3e/c7c85dbae3b0e879"]
-    target_group_1 = "edion-net-app-manage-dev-tg"
-    target_group_2 = "edion-net-app-registration-dev-tg"
+    listener_arn = ["arn:aws:elasticloadbalancing:ap-northeast-1:555516925462:listener/app/testedion/d73802ce28753a3e/dca837fd89b33855"]
+    target_group_1 = "edion-net-app-ma-dev-tg-blue"
+    target_group_2 = "edion-net-app-ma-dev-tg-green"
   }
 }
 
@@ -49,7 +49,7 @@ codebuild_projects = {
     project_name   = "edion-net-dev-app-project01"
     description    = "edion-net-dev-app-project01_codebuild"
     service_role   = "arn:aws:iam::555516925462:role/service-role/codebuild-cicd_test-service-role"
-    buildspec      = "build-app.yml"
+    buildspec      = "buildspec.yaml"
     repository_url = "https://github.com/quangnguyenviet109/VTI-EXV#main"
     connection_arn = "arn:aws:codeconnections:ap-northeast-1:555516925462:connection/19cefa9b-7398-4768-8d99-f43e4fb6b9bf"
   },
@@ -57,7 +57,7 @@ codebuild_projects = {
     project_name   = "edion-net-dev-app-mgt-project01"
     description    = "edion-net-dev-app-mgt-project01_codebuild"
     service_role   = "arn:aws:iam::555516925462:role/service-role/codebuild-cicd_test-service-role"
-    buildspec      = "build-app-mgt.yml"
+    buildspec      = "buildspec.yaml"
     repository_url = "https://github.com/quangnguyenviet109/VTI-EXV#main"
     connection_arn = "arn:aws:codeconnections:ap-northeast-1:555516925462:connection/19cefa9b-7398-4768-8d99-f43e4fb6b9bf"
   }
