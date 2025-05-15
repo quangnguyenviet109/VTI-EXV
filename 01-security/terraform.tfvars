@@ -1,27 +1,38 @@
-existing_lb_name = "dev-edion-isp-private-elb"
-
 target_groups = {
-  registration = {
-    name        = "edion-net-app-registration-dev-tg"
+  registration-blue = {
+    name        = "edion-net-app-registration-dev-tg-blue"
     port        = 443
     protocol    = "HTTPS"
-    vpc_id      = "dev-edion-isp"
+    vpc_id      = "vpc-5f684d38"
     target_type = "ip"
   },
-  manage = {
-    name        = "edion-net-app-manage-dev-tg"
+  registration-green = {
+    name        = "edion-net-app-registration-dev-tg-green"
     port        = 443
     protocol    = "HTTPS"
-    vpc_id      = "dev-edion-isp"
+    vpc_id      = "vpc-5f684d38"
+    target_type = "ip"
+  },
+  manage-blue = {
+    name        = "edion-net-app-manage-dev-tg-blue"
+    port        = 80
+    protocol    = "HTTP"
+    vpc_id      = "vpc-5f684d38"
+    target_type = "ip"
+  },
+  manage-green = {
+    name        = "edion-net-app-manage-dev-tg-green"
+    port        = 80
+    protocol    = "HTTP"
+    vpc_id      = "vpc-5f684d38"
     target_type = "ip"
   }
 }
 
 listener = {
-  elb_arn         = "arn:aws:acm:us-east-1:123456789012:certificate/example"
-  protocol        = "HTTPS"
-  port            = 443
-  certificate_arn = "arn:aws:acm:us-east-1:123456789012:certificate/example"
+  elb_arn         = "arn:aws:elasticloadbalancing:ap-northeast-1:555516925462:loadbalancer/app/testedion/d73802ce28753a3e"
+  protocol        = "HTTP"
+  port            = 81
   default_action  = {
     type          = "fixed-response"
     fixed_response = {
@@ -33,24 +44,37 @@ listener = {
 }
 
 listener_rules = {
-  registration = {
+  registration-blue = {
     priority        = 10
-    target_group_key = "registration"  # References the key in target_groups map
+    target_group_key = "registration-blue"  # References the key in target_groups map
     condition = {
       host_header = ["registration.domain"]
     }
   },
-  manage = {
+  registration-green = {
+    priority        = 30
+    target_group_key = "registration-green"  # References the key in target_groups map
+    condition = {
+      host_header = ["registration.domain"]
+    }
+  },
+  manage-blue = {
     priority        = 20
-    target_group_key = "manage"  # References the key in target_groups map
+    target_group_key = "manage-blue"  # References the key in target_groups map
+    condition = {
+      host_header = ["manage.domain"]
+    }
+  },
+  manage-green = {
+    priority        = 40
+    target_group_key = "manage-green"  # References the key in target_groups map
     condition = {
       host_header = ["manage.domain"]
     }
   }
 }
 
-vpc_id    = "dev-edion_isp"
-alb_sg_id = "edion-net-app-alb-dev-sg"
+vpc_id    = "vpc-5f684d38"
 sg_name = "edion-net-app-ecs-dev-sg"
 ingress_rules = {
   db_access = {
@@ -58,21 +82,21 @@ ingress_rules = {
     protocol    = "tcp"
     from_port   = 5432
     to_port     = 5432
-    cidr_blocks = ["0.0.0.0/0"]
+    security_groups  = ["sg-024db7526f464db85"]
   },
   https_access = {
     name        = "HTTPS access"
     protocol    = "tcp"
     from_port   = 443
     to_port     = 443
-    cidr_blocks = ["0.0.0.0/0"]
+    security_groups  = ["sg-024db7526f464db85"]
   },
   http_access = {
     name        = "HTTP access"
     protocol    = "tcp"
     from_port   = 80
     to_port     = 80
-    cidr_blocks = ["0.0.0.0/0"]
+    security_groups  = ["sg-024db7526f464db85"]
   }
 }
 

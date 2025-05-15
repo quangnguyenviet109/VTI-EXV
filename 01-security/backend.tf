@@ -4,7 +4,7 @@ terraform {
     organization = "VTI-EXV" 
 
     workspaces { 
-      name = "edion-net" 
+      name = "edion-net-01" 
     } 
   } 
 }

@@ -8,6 +8,7 @@ resource "aws_lb_target_group" "target_groups" {
   protocol    = each.value.protocol
   vpc_id      = each.value.vpc_id
   target_type = each.value.target_type
+  
 }
 
 # Create HTTPS listener
@@ -15,8 +16,6 @@ resource "aws_lb_listener" "https_listener" {
   load_balancer_arn = var.listener.elb_arn
   protocol          = var.listener.protocol
   port              = var.listener.port
-  certificate_arn   = var.listener.certificate_arn
-
   default_action {
     type = var.listener.default_action.type
     
@@ -30,6 +29,7 @@ resource "aws_lb_listener" "https_listener" {
       }
     }
   }
+  
 }
 
 # Create listener rules using for_each
@@ -49,4 +49,5 @@ resource "aws_lb_listener_rule" "listener_rules" {
       values = each.value.condition.host_header
     }
   }
+  
 }

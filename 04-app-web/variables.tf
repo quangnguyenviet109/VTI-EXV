@@ -17,10 +17,12 @@ variable "deployments" {
   description = "Map of deployment configurations"
   type = map(object({
     app_name           = string
+    cluster_name       = string
     service_name       = string
     deployment_group   = string
-    load_balancer_name = string
-    target_groups      = list(string)
+    listener_arn = list(string)
+    target_group_1 = string
+    target_group_2 = string
   }))
 }
 
@@ -41,12 +43,3 @@ variable "aws_region" {
   type        = string
   default     = "ap-northeast-1"
 }
-
-variable "access_key" {
-  description = "access console aws console"
-}
-
-variable "secret_key" {
-  description = "Secret console key to aws"
-}
-

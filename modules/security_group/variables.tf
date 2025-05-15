@@ -3,11 +3,6 @@ variable "vpc_id" {
   type        = string
 }
 
-variable "alb_sg_id" {
-  description = "Security group ID of the Application Load Balancer"
-  type        = string
-}
-
 variable "sg_name" {
   description = "Name of the security group"
   type        = string
@@ -20,7 +15,7 @@ variable "ingress_rules" {
     protocol    = string
     from_port   = number
     to_port     = number
-    cidr_blocks = list(string)
+    security_groups  = list(string)
   }))
 }
 

@@ -3,11 +3,11 @@ variable "clusters" {
   type = map(object({
     name = string
     container_insights = bool
-    kms_key = object({
-      description = string
-      deletion_window_in_days = number
-      alias = string
-    })
+    # kms_key = object({
+    #   description = string
+    #   deletion_window_in_days = number
+    #   alias = string
+    # })
   }))
 }
 
@@ -21,7 +21,7 @@ variable "services" {
     capacity_provider = string
     capacity_provider_weight = number
     load_balancer = object({
-      elb_name = string
+      target_group_arn = string
       container_name = string
       container_port = number
     })

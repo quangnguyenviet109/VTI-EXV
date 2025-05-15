@@ -1,8 +1,3 @@
-variable "existing_lb_name" {
-  description = "Name of the existing load balancer"
-  type        = string
-}
-
 variable "target_groups" {
   description = "Map of target group configurations"
   type = map(object({
@@ -20,7 +15,6 @@ variable "listener" {
     elb_arn         = string
     protocol        = string
     port            = number
-    certificate_arn = string
     default_action  = object({
       type          = string
       fixed_response = object({
@@ -48,11 +42,6 @@ variable "vpc_id" {
   type        = string
 }
 
-variable "alb_sg_id" {
-  description = "Security group ID of the Application Load Balancer"
-  type        = string
-}
-
 variable "sg_name" {
   description = "Name of the security group"
   type        = string
@@ -65,7 +54,7 @@ variable "ingress_rules" {
     protocol    = string
     from_port   = number
     to_port     = number
-    cidr_blocks = list(string)
+    security_groups  = list(string)
   }))
 }
 
@@ -83,13 +72,5 @@ variable "aws_region" {
   description = "AWS region to deploy resources"
   type        = string
   default     = "ap-northeast-1"
-}
-
-variable "access_key" {
-  description = "access console aws console"
-}
-
-variable "secret_key" {
-  description = "Secret console key to aws"
 }
 

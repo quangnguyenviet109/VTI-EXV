@@ -1,26 +1,3 @@
-data "aws_iam_policy_document" "assume_role" {
-  statement {
-    effect = "Allow"
-
-    principals {
-      type        = "Service"
-      identifiers = ["codedeploy.amazonaws.com"]
-    }
-
-    actions = ["sts:AssumeRole"]
-  }
-}
-
-resource "aws_iam_role" "codedeploy_service_role" {
-  name               = "CodeDeployServiceRole"
-  assume_role_policy = data.aws_iam_policy_document.assume_role.json
-}
-
-resource "aws_iam_role_policy_attachment" "AWSCodeDeployRole" {
-  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSCodeDeployRole"
-  role       = aws_iam_role.codedeploy_service_role.name
-}
-
 resource "aws_codedeploy_app" "ecs_application" {
   for_each = var.deployments
 
@@ -31,34 +8,50 @@ resource "aws_codedeploy_app" "ecs_application" {
 resource "aws_codedeploy_deployment_group" "ecs_deployment_group" {
   for_each = var.deployments
 
+  deployment_config_name = "CodeDeployDefault.ECSAllAtOnce"
   app_name               = aws_codedeploy_app.ecs_application[each.key].name
   deployment_group_name  = each.value.deployment_group
-  service_role_arn       = aws_iam_role.codedeploy_service_role.arn
+  service_role_arn       = "arn:aws:iam::555516925462:role/CodeDeployServiceRole"
 
   deployment_style {
-    deployment_type   = "IN_PLACE"
+    deployment_type   = "BLUE_GREEN"
     deployment_option = "WITH_TRAFFIC_CONTROL"
   }
 
   ecs_service {
-    cluster_name = "Amazon ECS"
+    cluster_name = each.value.cluster_name
     service_name = each.value.service_name
   }
 
+  
   load_balancer_info {
-    elb_info {
-      name = each.value.load_balancer_name
-    }
+    target_group_pair_info {
+      prod_traffic_route {
+        listener_arns = each.value.listener_arn
+      }
 
-    dynamic "target_group_info" {
-      for_each = each.value.target_groups
-      content {
-        name = target_group_info.value
+      target_group {
+        name = each.value.target_group_1
+      }
+
+      target_group {
+        name = each.value.target_group_2
       }
     }
   }
+  auto_rollback_configuration {
+    enabled = true
+    events  = ["DEPLOYMENT_FAILURE"]
+  }
 
-  depends_on = [
-    aws_iam_role.codedeploy_service_role
-  ]
+  blue_green_deployment_config {
+    deployment_ready_option {
+      action_on_timeout = "CONTINUE_DEPLOYMENT"
+    }
+
+    terminate_blue_instances_on_deployment_success {
+      action                           = "TERMINATE"
+      termination_wait_time_in_minutes = 5
+    }
+  }
 }

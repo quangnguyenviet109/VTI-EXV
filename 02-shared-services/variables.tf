@@ -34,11 +34,3 @@ variable "aws_region" {
   default     = "ap-northeast-1"
 }
 
-variable "access_key" {
-  description = "access console aws console"
-}
-
-variable "secret_key" {
-  description = "Secret console key to aws"
-}
-

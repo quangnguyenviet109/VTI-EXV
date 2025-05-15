@@ -10,7 +10,7 @@ resource "aws_security_group" "edion_net_app_ecs_dev_sg" {
       from_port   = ingress.value.from_port
       to_port     = ingress.value.to_port
       protocol    = ingress.value.protocol
-      cidr_blocks = ingress.value.cidr_blocks
+      security_groups  = ingress.value.security_groups 
       description = ingress.value.name
     }
   }
@@ -23,4 +23,5 @@ resource "aws_security_group" "edion_net_app_ecs_dev_sg" {
     cidr_blocks = var.egress_rules.cidr_blocks
     description = "Allow all outbound traffic"
   }
+  
 }

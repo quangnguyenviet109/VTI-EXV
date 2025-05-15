@@ -23,10 +23,10 @@ secure_buckets = {
 
 artifact_buckets = {
   codepipeline_bucket_manage = {
-    bucket_name = "s3_artifact_manage"
+    bucket_name = "s3-artifact-manage"
   },
   codepipeline_bucket_registration = {
-    bucket_name = "s3_artifact_registration"
+    bucket_name = "s3-artifact-registration"
   }
 }
 

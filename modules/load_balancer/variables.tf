@@ -15,7 +15,6 @@ variable "listener" {
     elb_arn         = string
     protocol        = string
     port            = number
-    certificate_arn = string
     default_action  = object({
       type          = string
       fixed_response = object({
