@@ -10,29 +10,35 @@ variable "target_groups" {
 }
 
 variable "listener" {
-  description = "HTTPS listener configuration"
-  type = object({
+  description = "Map of listener configurations"
+  type = map(object({
     elb_arn        = string
     protocol       = string
     port           = number
     default_action = object({
-      type                    = string
-      default_target_groups   = list(string)  # danh sách key của target groups
+      type                  = string
+      default_target_groups = list(string)
     })
-  })
+  }))
 }
 
 
 variable "listener_rules" {
-  description = "Map of listener rule configurations"
+  description = "Listener rules with dynamic forward target groups"
   type = map(object({
     priority     = number
-    target_group_key = string  # References a key in the target_groups map
+    listener_key = string
     condition = object({
       host_header = list(string)
     })
+    forward_targets = list(object({
+      target_group_key = string
+      weight           = number
+    }))
   }))
 }
+
+
 
 variable "vpc_id" {
   description = "VPC ID for the security group"

@@ -29,7 +29,7 @@ deployments = {
     cluster_name       = "edion-net-dev-app-cluster01"
     service_name       = "edion-net-app-registration-dev-service"
     deployment_group   = "edion-net-dev-app-deploy_group01"
-    listener_arn = ["arn:aws:elasticloadbalancing:ap-northeast-1:555516925462:listener/app/testedion/d73802ce28753a3e/dca837fd89b33855"]
+    listener_arn = ["arn:aws:elasticloadbalancing:ap-northeast-1:555516925462:listener/app/testedion/8ac31d111ad814aa/608461946736f704"]
     target_group_1 = "edion-net-app-re-dev-tg-blue"
     target_group_2 = "edion-net-app-re-dev-tg-green"
   },
@@ -38,7 +38,7 @@ deployments = {
     cluster_name       = "edion-net-dev-app-mgt-cluster01"
     service_name       = "edion-net-app-manage-dev-service"
     deployment_group   = "edion-net-dev-app-mgt-deploy_group01"
-    listener_arn = ["arn:aws:elasticloadbalancing:ap-northeast-1:555516925462:listener/app/testedion/d73802ce28753a3e/dca837fd89b33855"]
+    listener_arn = ["arn:aws:elasticloadbalancing:ap-northeast-1:555516925462:listener/app/testedion/8ac31d111ad814aa/160baf9447edafe8"]
     target_group_1 = "edion-net-app-ma-dev-tg-blue"
     target_group_2 = "edion-net-app-ma-dev-tg-green"
   }

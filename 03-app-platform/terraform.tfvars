@@ -18,14 +18,14 @@ services = {
     capacity_provider = "FARGATE"
     capacity_provider_weight = 2
     load_balancer = {
-      target_group_arn = "arn:aws:elasticloadbalancing:ap-northeast-1:555516925462:targetgroup/edion-net-app-re-dev-tg-blue/4ea223815d859180"
+      target_group_arn = "arn:aws:elasticloadbalancing:ap-northeast-1:555516925462:targetgroup/edion-net-app-re-dev-tg-blue/92761380670b2c3c"
       container_name = "test_cicd"
       container_port = 80
     }
     network_configuration = {
-      subnets = ["subnet-69683932"]
-      security_groups = ["sg-0a458d7de71051d8f"]
-      assign_public_ip = false
+      subnets = ["subnet-08fa087aeea331f7b"]
+      security_groups = ["sg-0872f0675f2f11948"]
+      assign_public_ip = true
     }
   },
   manage_service = {
@@ -36,14 +36,14 @@ services = {
     capacity_provider = "FARGATE"
     capacity_provider_weight = 2
     load_balancer = {
-      target_group_arn = "arn:aws:elasticloadbalancing:ap-northeast-1:555516925462:targetgroup/edion-net-app-ma-dev-tg-blue/b315201cc2552c99"
+      target_group_arn = "arn:aws:elasticloadbalancing:ap-northeast-1:555516925462:targetgroup/edion-net-app-ma-dev-tg-blue/809a95d9cffbbfba"
       container_name = "test_cicd"
       container_port = 80
     }
     network_configuration = {
-      subnets = ["subnet-2831df03"]
-      security_groups = ["sg-0a458d7de71051d8f"]
-      assign_public_ip = false
+      subnets = ["subnet-08fa087aeea331f7b"]
+      security_groups = ["sg-0872f0675f2f11948"]
+      assign_public_ip = true
     }
   }
 }
