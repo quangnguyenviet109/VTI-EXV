@@ -1,15 +1,15 @@
 target_groups = {
   registration-blue = {
     name        = "edion-net-app-re-dev-tg-blue"
-    port        = 443
-    protocol    = "HTTPS"
+    port        = 80
+    protocol    = "HTTP"
     vpc_id      = "vpc-0d6e7b64616fc440d"
     target_type = "ip"
   },
   registration-green = {
     name        = "edion-net-app-re-dev-tg-green"
-    port        = 443
-    protocol    = "HTTPS"
+    port        = 80
+    protocol    = "HTTP"
     vpc_id      = "vpc-0d6e7b64616fc440d"
     target_type = "ip"
   },

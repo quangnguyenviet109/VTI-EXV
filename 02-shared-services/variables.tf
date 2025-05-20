@@ -34,3 +34,10 @@ variable "aws_region" {
   default     = "ap-northeast-1"
 }
 
+variable "log_groups" {
+  type = list(object({
+    name              = string
+    retention_in_days = number
+    class             = string
+  }))
+}

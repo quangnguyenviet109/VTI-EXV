@@ -2,8 +2,6 @@ environment          = "dev"
 aws_region           = "ap-northeast-1"
 aws_account_id       = "555516925462"
 
-eventbridge_scheduler_role_arn = "arn:aws:iam::555516925462:role/dev-eventbridge-scheduler-ecs-updateservice-role"
-
 schedules = [
   {
     schedule_name       = "dev-stop-app-service-schedule"
@@ -52,27 +50,5 @@ schedules = [
     target_service_name = "edion-net-app-manage-dev-service"
     target_task_count   = 1
     task_definition_arn = "arn:aws:ecs:ap-northeast-1:555516925462:task-definition/manage-task:1"
-  }
-]
-log_groups = [
-  {
-    name              = "/aws/codepipeline/edion-net-dev-app-codepipeline"
-    retention_in_days = 30
-    class             = "STANDARD"
-  },
-  {
-    name              = "/aws/codepipeline/edion-net-dev-app-mgt-codepipeline"
-    retention_in_days = 30
-    class             = "STANDARD"
-  },
-  {
-    name              = "/edion-net-dev/app/container-app-logs"
-    retention_in_days = 30
-    class             = "STANDARD"
-  },
-  {
-    name              = "/edion-net-dev/app-mgt/container-app-logs"
-    retention_in_days = 30
-    class             = "STANDARD"
   }
 ]
